@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  justify-content: center;
+  width: 319px;
+  height: 20px;
+}
+.footerLink {
+  margin-left: 3px;
+  font-family: 'Roboto, ' sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #1890ff;
+}
+
+.footerText {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #8c8c8c;
+}

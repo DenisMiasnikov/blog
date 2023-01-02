@@ -1,13 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Roboto&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #ebeef3;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+button {
+  background: unset;
+  border: unset;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+}
+
+ul.ant-pagination li.ant-pagination-item-active a {
+  color: white;
+  background-color: #1677ff;
+}
+
+ul.ant-pagination li.ant-pagination-item-active a:hover {
+  color: white;
+}
+
+div ul.ant-pagination li.ant-pagination-options {
+  display: none;
+}
+
+h3 {
+  margin: 0;
 }

@@ -1,0 +1,38 @@
+$mainColor: #ffff;
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 15px 22px;
+  height: 50px;
+  background-color: $mainColor;
+}
+
+.headerLink {
+  flex-grow: 1;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  margin: 0 27px;
+}
+
+.userName {
+  margin-right: 13px;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.userImage {
+  width: 46px;
+  height: 46px;
+}
