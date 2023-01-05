@@ -5,7 +5,7 @@
 
 .articleItem {
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   padding: 15px;
   margin-top: 26px;
   width: 911px;
@@ -68,6 +68,16 @@
 }
 
 .articleInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.articleButtons {
+  display: flex;
+}
+
+.userInfo {
+  justify-content: flex-end;
   display: flex;
 }
 

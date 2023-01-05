@@ -41,3 +41,26 @@ div ul.ant-pagination li.ant-pagination-options {
 h3 {
   margin: 0;
 }
+
+/* div.ant-popover.ant-popconfirm.ant-popover-placement-rightTop {
+  top: 195px !important;
+  left: 1227px !important;
+} */
+
+div.ant-popconfirm-inner-content div.ant-popconfirm-buttons button {
+  box-shadow: none;
+}
+
+div.ant-popconfirm-inner-content div.ant-popconfirm-buttons button.ant-btn-default {
+  color: #595959;
+}
+
+div.ant-popconfirm-inner-content div.ant-popconfirm-message div.ant-popconfirm-message-title {
+  width: 184px;
+  font-family: 'Roboto', 'sans-serif';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #595959;
+}

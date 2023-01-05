@@ -40,3 +40,17 @@ export const asyncGetAnArticle = (id) => async (dispatch) => {
     dispatch(getAnArticles(anArticle.article));
   });
 };
+
+export const asyncCreateAnArticle = (data) => async (dispatch) => {
+  const token = localStorage.getItem('token');
+  article.createArticle(token, data).then((res) => {
+    console.log(res);
+  });
+};
+
+export const asyncEditArticle = (data, id) => async (dispatch) => {
+  const token = localStorage.getItem('token');
+  article.updateArticle(token, id, data).then((res) => {
+    console.log(res);
+  });
+};

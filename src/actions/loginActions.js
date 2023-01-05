@@ -20,12 +20,13 @@ export const setError = (data) => ({
   type: types.SET_ERROR,
 });
 
-export const asyncUserSingIn = (email, password, fn) => (dispatch) => {
+export const asyncUserSingIn = (email, password, fn, fn2) => (dispatch) => {
   user
     .singIn(email, password, fn)
     .then((userData) => {
       localStorage.setItem('token', userData.user.token);
       dispatch(userSingIn(userData.user));
+      fn2();
     })
     .catch(() => {
       dispatch(setError());

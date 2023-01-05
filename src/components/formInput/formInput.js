@@ -5,7 +5,7 @@ import InputError from '../inputError';
 import style from './formInput.module.scss';
 
 export default function FormInput(props) {
-  const { title, placeholder, name, reg, errors } = props;
+  const { title, placeholder, name, reg, errors, value } = props;
   const actClassName = () => {
     if (errors) {
       return `${style.formInput} ${style.invalidFormInput}`;
@@ -16,7 +16,14 @@ export default function FormInput(props) {
   return (
     <label className={style.formTitle}>
       {title}
-      <input className={actClassName()} type="text" name={name} placeholder={placeholder} {...reg} />
+      <input
+        className={actClassName()}
+        type="text"
+        name={name}
+        placeholder={placeholder}
+        {...reg}
+        defaultValue={value}
+      />
       {error}
     </label>
   );

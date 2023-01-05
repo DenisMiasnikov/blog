@@ -38,19 +38,10 @@ export default class BlogArticlesService {
     if (!res.ok) {
       throw new Error(`Could not fetch, recieved ${res.status}`);
     }
-
     return await res.json();
   }
 
-  async createArticle(token, title, description, body, tagList) {
-    const data = {
-      article: {
-        title: `${title}`,
-        description: `${description}`,
-        body: `${body}`,
-        tagList: [`${tagList}`],
-      },
-    };
+  async createArticle(token, data) {
     const res = await fetch(`${this._apiBase}`, {
       method: 'POST',
       headers: {
@@ -67,15 +58,15 @@ export default class BlogArticlesService {
     return await res.json();
   }
 
-  async updateArticle(token, slug, title, description, body) {
-    const data = {
-      article: {
-        title: `${title}`,
-        description: `${description}`,
-        body: `${body}`,
-      },
-    };
-    const res = await fetch(`${this._apiBase}/${slug}`, {
+  async updateArticle(token, id, data) {
+    // const data = {
+    //   article: {
+    //     title: `${title}`,
+    //     description: `${description}`,
+    //     body: `${body}`,
+    //   },
+    // };
+    const res = await fetch(`${this._apiBase}/${id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

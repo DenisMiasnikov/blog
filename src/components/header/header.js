@@ -18,7 +18,7 @@ function Header({ data, userLogOut }) {
       </Link>
       {!isLogged && <LogButton to="/sing-in" text="Sing In" />}
       {!isLogged && <LogButton to="/sing-up" text="Sing Up" green="true" />}
-      {isLogged && <LogButton to="/sing-up" text="Create article" green="true" small="true" />}
+      {isLogged && <LogButton to="/new-article" text="Create article" green="true" small="true" />}
       {isLogged && (
         <Link to="/profile">
           <div className={style.userCard}>

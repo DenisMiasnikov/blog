@@ -24,7 +24,7 @@ export default function LogButton(props) {
     return style.logButton;
   };
   return (
-    <Link to={to} className={actClass()} type="button">
+    <Link to={to} className={actClass()}>
       {text}
     </Link>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 /* eslint-disable no-useless-escape */
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -14,6 +14,10 @@ import * as actions from '../../actions/loginActions';
 import style from './singIn.module.scss';
 
 function SingIn({ data, asyncUserSingIn }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage = location.state?.from?.pathname || '/sing-up';
   const {
     register,
     formState: { errors },
@@ -23,16 +27,15 @@ function SingIn({ data, asyncUserSingIn }) {
   } = useForm({
     mode: 'onBlur',
   });
-  const { isLogged } = data;
   const onSubmit = (e) => {
-    asyncUserSingIn(e.email, e['email or password'], setError);
+    asyncUserSingIn(e.email, e.password, setError, () => navigate(fromPage, { replace: true }));
     reset();
+    console.log(fromPage);
+    navigate(fromPage);
   };
   const error = errors['email or password'] ? <InputError message={errors['email or password'].message} /> : null;
-  console.log(errors['email or password']);
   return (
     <div className={style.wrapper}>
-      {isLogged && <Navigate to="/article" />}
       <form className={style.container} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={style.title}>Sing In</h3>
         <FormInput
@@ -68,3 +71,17 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, actions)(SingIn);
+
+// export default function SingIn() {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   const fromPage = location.state?.from?.pathname || '/sing-up';
+
+//   return (
+//     <div>
+//       <h1>from page</h1>
+//       {fromPage}
+//     </div>
+//   );
+// }

@@ -1,15 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
+import TagButton from '../tagButton';
 import * as actions from '../../actions/articleActions';
 
 import style from './article.module.scss';
 
-function Article({ data, asyncGetAnArticle }) {
+function Article({ article, user, asyncGetAnArticle }) {
   const { id } = useParams();
-  const { anArticle } = data;
+  const { anArticle } = article;
+  const { isLogged } = user;
   const { slug } = anArticle;
+  const onClick = () => {
+    console.log('click');
+  };
   if (id !== slug) {
     asyncGetAnArticle(id);
   }
@@ -30,15 +35,25 @@ function Article({ data, asyncGetAnArticle }) {
               </li>
             </ul>
             <p className={style.articleTextPrewiev}>{description}</p>
+            <p className="article Text">{body}</p>
           </div>
           <div className={style.articleInfo}>
-            <div className={style.articleInfoItem}>
-              <span className={style.articleUserName}>{username}</span>
-              <span className={style.articleDate}>March 5, 2020 </span>
+            <div className={style.userInfo}>
+              <div className={style.articleInfoItem}>
+                <span className={style.articleUserName}>{username}</span>
+                <span className={style.articleDate}>March 5, 2020 </span>
+              </div>
+              <img src={image} alt="userPhoto" className={style.userPhoto} />
             </div>
-            <img src={image} alt="userPhoto" className={style.userPhoto} />
+            {isLogged && (
+              <div className={style.articleButtons}>
+                <TagButton name="del-s" text="Delete" action={onClick} />
+                <Link to={`/articles/${id}/edit`}>
+                  <TagButton name="edit" text="Edit" />
+                </Link>
+              </div>
+            )}
           </div>
-          <p className="article Text">{body}</p>
         </div>
       </div>
     );
@@ -46,7 +61,8 @@ function Article({ data, asyncGetAnArticle }) {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.articlesReducer,
+  article: state.articlesReducer,
+  user: state.loginReducer,
 });
 
 export default connect(mapStateToProps, actions)(Article);

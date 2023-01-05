@@ -39,7 +39,7 @@ function EditForm({ data, asyncUpdateUser }) {
   };
   return (
     <div className={style.wrapper}>
-      {!isLogged && <Navigate to="/sing-in" />}
+      {/* {!isLogged && <Navigate to="/sing-in" />} */}
       <form className={style.container} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={style.title}>Edit Profile</h3>
         <FormInput
