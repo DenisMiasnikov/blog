@@ -18,7 +18,6 @@ export default class BlogFavoritesService {
     if (!res.ok) {
       throw new Error(`Could not fetch, recieved ${res.status}`);
     }
-
     return await res.json();
   }
 
@@ -35,7 +34,6 @@ export default class BlogFavoritesService {
     if (!res.ok) {
       throw new Error(`Could not fetch, recieved ${res.status}`);
     }
-
     return await res.json();
   }
 }

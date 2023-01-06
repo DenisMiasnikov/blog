@@ -64,3 +64,7 @@ div.ant-popconfirm-inner-content div.ant-popconfirm-message div.ant-popconfirm-m
   line-height: 22px;
   color: #595959;
 }
+
+code {
+  white-space: break-spaces;
+}

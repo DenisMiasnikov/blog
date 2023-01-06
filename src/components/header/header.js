@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import * as actions from '../../actions/loginActions';
 import LogButton from '../logButton';
-import photo from '../articleItem/photo.svg';
 
 import style from './header.module.scss';
 
@@ -29,7 +28,7 @@ function Header({ data, userLogOut }) {
       )}
       {isLogged && (
         <button type="button" onClick={userLogOut}>
-          <LogButton to="/" text="Log Out" border="true" />
+          <LogButton text="Log Out" border="true" />
         </button>
       )}
     </header>

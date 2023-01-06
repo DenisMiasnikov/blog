@@ -4,3 +4,6 @@ export const USER_LOG_IN = 'USER_LOG_IN';
 export const GET_AN_ARTICLE = 'GET_AN_ARTICLE';
 export const USER_LOG_OUT = 'USER_LOG_OUT';
 export const SET_ERROR = 'SET_ERROR';
+export const START_TO_FETCH = 'START_TO_FETCH';
+export const FINISH_TO_FETCH = 'FINISH_TO_FETCH';
+export const GET_AN_ERROR = 'GET_AN_ERROR';

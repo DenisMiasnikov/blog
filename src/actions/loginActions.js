@@ -4,6 +4,19 @@ import * as types from './actionsType';
 
 const user = new BlogUserService();
 
+export const startToFetch = () => ({
+  type: types.START_TO_FETCH,
+});
+
+export const getAnError = (e) => ({
+  type: types.GET_AN_ERROR,
+  payload: e,
+});
+
+export const finishToFetch = () => ({
+  type: types.FINISH_TO_FETCH,
+});
+
 export const userSingIn = (data) => ({
   type: types.USER_LOG_IN,
   payload: data,
@@ -21,6 +34,7 @@ export const setError = (data) => ({
 });
 
 export const asyncUserSingIn = (email, password, fn, fn2) => (dispatch) => {
+  dispatch(startToFetch());
   user
     .singIn(email, password, fn)
     .then((userData) => {
@@ -28,8 +42,8 @@ export const asyncUserSingIn = (email, password, fn, fn2) => (dispatch) => {
       dispatch(userSingIn(userData.user));
       fn2();
     })
-    .catch(() => {
-      dispatch(setError());
+    .catch((err) => {
+      dispatch(getAnError(err));
     });
 };
 

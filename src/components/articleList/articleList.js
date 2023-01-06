@@ -1,35 +1,68 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Pagination } from 'antd';
-import { Link } from 'react-router-dom';
 
 import ArticleItem from '../articleItem/articleItem';
+import Loading from '../loading';
 import * as actions from '../../actions/articleActions';
 
 import style from './articleList.module.scss';
 
-function ArticleList({ data, asyncGetGlobalArticles }) {
-  const { globalArticles, actualPage, totalPage } = data;
-  const item = globalArticles.map((article) => {
-    const { ...itemProps } = article;
-    return (
-      <Link key={article.slug} to={`/article/${article.slug}`}>
-        <ArticleItem {...itemProps} />
-      </Link>
-    );
-  });
+function ArticleList({ article, user, asyncGetGlobalArticles, asyncUnFavoriteAnArticle, asyncFavoriteAnArticle }) {
+  const token = localStorage.getItem('token');
+  const { globalArticles, actualPage, totalPage, loading } = article;
+  const { isLogged } = user;
+
+  useEffect(() => {
+    if (isLogged) {
+      asyncGetGlobalArticles(token);
+    }
+    if (!isLogged) {
+      asyncGetGlobalArticles(token);
+    }
+  }, [asyncGetGlobalArticles, isLogged, token]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [actualPage]);
+
+  const onChange = (e) => {
+    if (token) {
+      asyncGetGlobalArticles(token, e);
+    }
+    if (!token) {
+      asyncGetGlobalArticles(e);
+    }
+  };
+
+  const item = globalArticles.map((anArticle) => (
+    <ArticleItem
+      key={anArticle.slug}
+      article={anArticle}
+      user={user}
+      like={asyncFavoriteAnArticle}
+      unlike={asyncUnFavoriteAnArticle}
+      token={token}
+    />
+  ));
   return (
     <>
-      <ul className={style.articleList}>{item}</ul>
-      <div className={style.footer}>
-        <Pagination current={actualPage} total={totalPage} onChange={asyncGetGlobalArticles} />
-      </div>
+      {loading && <Loading />}
+      {!loading && (
+        <>
+          <ul className={style.articleList}>{item}</ul>
+          <div className={style.footer}>
+            <Pagination current={actualPage} total={totalPage} onChange={onChange} />
+          </div>
+        </>
+      )}
     </>
   );
 }
 
 const mapStateToProps = (state) => ({
-  data: state.articlesReducer,
+  article: state.articlesReducer,
+  user: state.loginReducer,
 });
 
 export default connect(mapStateToProps, actions)(ArticleList);

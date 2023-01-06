@@ -22,8 +22,15 @@ export default class BlogArticlesService {
     return await res.json();
   }
 
-  async getGlobalRecent(offset = 0) {
-    const res = await fetch(`${this._apiBase}?offset=${offset}`);
+  async getGlobalRecent(offset, token) {
+    const res = await fetch(`${this._apiBase}?offset=${offset}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
       throw new Error(`Could not fetch, recieved ${res.status}`);
@@ -32,8 +39,15 @@ export default class BlogArticlesService {
     return await res.json();
   }
 
-  async getAnArticle(slug) {
-    const res = await fetch(`${this._apiBase}/${slug}`);
+  async getAnArticle(slug, token) {
+    const res = await fetch(`${this._apiBase}/${slug}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
       throw new Error(`Could not fetch, recieved ${res.status}`);

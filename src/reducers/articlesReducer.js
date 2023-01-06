@@ -6,6 +6,8 @@ const articleReducer = (
     anArticle: [],
     actualPage: 1,
     totalPage: 0,
+    loading: false,
+    error: {},
   },
   action
 ) => {
@@ -15,6 +17,7 @@ const articleReducer = (
         ...state,
         globalArticles: action.articles,
         totalPage: action.totalPage,
+        loading: false,
       };
     case 'CHANGE_ACTUAL_PAGE':
       return {
@@ -25,6 +28,18 @@ const articleReducer = (
       return {
         ...state,
         anArticle: action.payload,
+        loading: false,
+      };
+    case 'START_TO_FETCH':
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'GET_AN_ERROR':
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     default:
       return state;

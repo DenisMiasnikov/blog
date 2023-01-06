@@ -1,67 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
+import format from 'date-fns/format';
+import { nanoid } from 'nanoid';
 
 import TagButton from '../tagButton';
+import Loading from '../loading';
+import ArticleItem from '../articleItem/articleItem';
 import * as actions from '../../actions/articleActions';
 
 import style from './article.module.scss';
 
-function Article({ article, user, asyncGetAnArticle }) {
+function Article({ article, user, asyncGetAnArticle, asyncUnFavoriteAnArticle, asyncFavoriteAnArticle, loading }) {
+  const token = localStorage.getItem('token');
   const { id } = useParams();
-  const { anArticle } = article;
-  const { isLogged } = user;
-  const { slug } = anArticle;
-  const onClick = () => {
-    console.log('click');
-  };
-  if (id !== slug) {
-    asyncGetAnArticle(id);
-  }
-  if (anArticle.length !== 0) {
-    const { title, description, tagList, favoritesCount, author, body } = anArticle;
-    const { username, image } = author;
-    return (
-      <div className={style.article}>
-        <div className={style.articleItem}>
-          <div className={style.articleContent}>
-            <div className={style.articleHeader}>
-              <h6 className={style.articleTitle}>{title}</h6>
-              <span className={style.articleRate}>{favoritesCount}</span>
-            </div>
-            <ul className={style.tagList}>
-              <li className="tagItem">
-                <span className={style.tagName}>{tagList[0]}</span>
-              </li>
-            </ul>
-            <p className={style.articleTextPrewiev}>{description}</p>
-            <p className="article Text">{body}</p>
-          </div>
-          <div className={style.articleInfo}>
-            <div className={style.userInfo}>
-              <div className={style.articleInfoItem}>
-                <span className={style.articleUserName}>{username}</span>
-                <span className={style.articleDate}>March 5, 2020 </span>
-              </div>
-              <img src={image} alt="userPhoto" className={style.userPhoto} />
-            </div>
-            {isLogged && (
-              <div className={style.articleButtons}>
-                <TagButton name="del-s" text="Delete" action={onClick} />
-                <Link to={`/articles/${id}/edit`}>
-                  <TagButton name="edit" text="Edit" />
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
+
+  useEffect(() => {
+    asyncGetAnArticle(id, token);
+  }, [asyncGetAnArticle, id, token]);
+
+  return (
+    <>
+      {loading && <Loading />}
+      {!loading && (
+        <ArticleItem
+          article={article}
+          user={user}
+          like={asyncFavoriteAnArticle}
+          unlike={asyncUnFavoriteAnArticle}
+          id={id}
+          token={token}
+        />
+      )}
+    </>
+  );
 }
 
 const mapStateToProps = (state) => ({
-  article: state.articlesReducer,
+  article: state.articlesReducer.anArticle,
+  loading: state.articlesReducer.loading,
   user: state.loginReducer,
 });
 

@@ -11,11 +11,11 @@ import store from './store/store';
 const token = localStorage.getItem('token');
 if (token) {
   store.dispatch(asyncGetUser(token));
-  store.dispatch(asyncGetGlobalArticles());
+  // store.dispatch(asyncGetGlobalArticles(token));
 }
-if (!token) {
-  store.dispatch(asyncGetGlobalArticles());
-}
+// if (!token) {
+//   store.dispatch(asyncGetGlobalArticles());
+// }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
