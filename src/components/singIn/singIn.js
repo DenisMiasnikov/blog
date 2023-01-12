@@ -1,14 +1,13 @@
 /* eslint-disable quotes */
 /* eslint-disable no-useless-escape */
 import React, { useEffect } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import SubmitButton from '../submitButton';
 import FormFooter from '../formFooter';
 import FormInput from '../formInput';
-import InputError from '../inputError';
 import Loading from '../loading';
 import * as actions from '../../actions/loginActions';
 

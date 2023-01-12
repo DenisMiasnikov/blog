@@ -5,7 +5,6 @@
 
 .articleItem {
   display: flex;
-  // flex-wrap: wrap;
   padding: 15px;
   margin: 26px 0px;
   width: 911px;
@@ -58,30 +57,7 @@
   font-size: 12px;
   line-height: 22px;
   color: rgba(0, 0, 0, 0.75);
-  // ::before {
-  //   display: flex;
-  //   content: '';
-  //   width: 16px;
-  //   height: 16px;
-  //   background-image: url('./heart.svg');
-  // }
 }
-
-// .articleRate::before {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-right: 5px;
-//   content: '';
-//   width: 16px;
-//   height: 16px;
-//   background-image: url('./heart.svg');
-// }
-
-// .articleRate:checked::before {
-//   margin-top: 2px;
-//   background: url('./activHeart.svg') no-repeat;
-// }
 
 .tagList {
   max-width: 682px;

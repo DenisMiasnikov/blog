@@ -3,8 +3,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  // 320px
-  // height: 62px;
   font-family: 'Roboto', 'sans-serif';
   font-style: normal;
   font-weight: 400;
@@ -21,10 +19,6 @@
   border-radius: 4px;
   color: rgba(0, 0, 0, 0.75);
 }
-
-// input[type='password'] {
-//   -webkit-text-security: square;
-// }
 
 ::placeholder {
   color: #d9d9d9;

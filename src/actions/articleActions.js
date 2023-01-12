@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable default-param-last */
 import BlogArticlesService from '../services/blog-articles-service';
 import BlogFavoritesService from '../services/blog-favorites-service';
 import { getOffset } from '../utils/utils';
@@ -13,9 +15,8 @@ export const startToFetch = () => ({
   type: types.START_TO_FETCH,
 });
 
-export const getAnError = (e) => ({
+export const getAnError = () => ({
   type: types.GET_AN_ERROR,
-  payload: e,
 });
 
 export const getGlobalArticles = (data) => ({
@@ -94,20 +95,6 @@ export const asyncGetAnArticle = (id, token) => (dispatch) => {
     });
 };
 
-export const asyncCreateAnArticle = (data) => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  article.createArticle(token, data).then((res) => {
-    console.log(res);
-  });
-};
-
-export const asyncEditArticle = (data, id) => async (dispatch) => {
-  const token = localStorage.getItem('token');
-  article.updateArticle(token, id, data).then((res) => {
-    console.log(res);
-  });
-};
-
 export const asyncFavoriteAnArticle = (token, id) => async (dispatch) => {
   like.favoriteArticle(token, id).then((anArticle) => {
     dispatch(getAnArticles(anArticle.article));
@@ -124,4 +111,14 @@ export const asyncUnFavoriteAnArticle = (token, id) => async (dispatch) => {
       dispatch(getGlobalArticles(res));
     });
   });
+};
+
+export const asyncDeleteAnArticle = (token, id) => async (dispatch) => {
+  article.deleteArticle(token, id).catch((e) => {
+    dispatch(getAnError(e));
+  });
+};
+
+export const asyncGetAnError = () => async (dispatch) => {
+  dispatch(getAnError());
 };

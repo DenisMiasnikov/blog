@@ -1,5 +1,8 @@
+/* eslint-disable default-param-last */
 /* eslint-disable no-return-await */
 /* eslint-disable no-underscore-dangle */
+import Error from '../components/error';
+
 export default class BlogArticlesService {
   constructor() {
     this._apiBase = 'https://blog.kata.academy/api/articles';
@@ -22,7 +25,7 @@ export default class BlogArticlesService {
     return await res.json();
   }
 
-  async getGlobalRecent(offset, token) {
+  async getGlobalRecent(token, offset) {
     const res = await fetch(`${this._apiBase}?offset=${offset}`, {
       method: 'GET',
       headers: {
@@ -73,13 +76,6 @@ export default class BlogArticlesService {
   }
 
   async updateArticle(token, id, data) {
-    // const data = {
-    //   article: {
-    //     title: `${title}`,
-    //     description: `${description}`,
-    //     body: `${body}`,
-    //   },
-    // };
     const res = await fetch(`${this._apiBase}/${id}`, {
       method: 'PUT',
       headers: {
@@ -108,7 +104,6 @@ export default class BlogArticlesService {
     if (!res.ok) {
       throw new Error(`Could not fetch, recieved ${res.status}`);
     }
-
     return await res;
   }
 }

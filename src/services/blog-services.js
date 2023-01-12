@@ -73,7 +73,6 @@ export default class BlogUserService {
 
     if (!res.ok) {
       const errorBody = await res.json();
-      // console.log(errorBody);
       makeError(errorBody, fn);
     }
     return await res.json();

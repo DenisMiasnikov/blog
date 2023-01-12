@@ -1,16 +1,10 @@
 import React, { useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
-import format from 'date-fns/format';
-import { nanoid } from 'nanoid';
+import { useParams } from 'react-router-dom';
 
-import TagButton from '../tagButton';
 import Loading from '../loading';
 import ArticleItem from '../articleItem/articleItem';
 import * as actions from '../../actions/articleActions';
-
-import style from './article.module.scss';
 
 function Article({ article, user, asyncGetAnArticle, asyncUnFavoriteAnArticle, asyncFavoriteAnArticle, loading }) {
   const token = localStorage.getItem('token');

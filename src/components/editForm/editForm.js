@@ -1,11 +1,12 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable quotes */
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import SubmitButton from '../submitButton';
+import BlogUserService from '../../services/blog-services';
 import FormInput from '../formInput';
 import * as actions from '../../actions/loginActions';
 
@@ -22,10 +23,8 @@ function EditForm({ data, asyncUpdateUser }) {
     mode: 'onBlur',
   });
   const { isLogged, error } = data;
-  // setError('username', {
-  //   type: 'custom',
-  //   message: 'custom message',
-  // });
+  const user = new BlogUserService();
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
   const onSubmit = (e) => {
@@ -35,11 +34,13 @@ function EditForm({ data, asyncUpdateUser }) {
       username: e.username,
       image: e.image,
     };
-    asyncUpdateUser(token, userData, setError);
+    user.updateUser(token, userData, setError).then(() => {
+      asyncUpdateUser(token, userData, setError);
+      navigate('/article');
+    });
   };
   return (
     <div className={style.wrapper}>
-      {/* {!isLogged && <Navigate to="/sing-in" />} */}
       <form className={style.container} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={style.title}>Edit Profile</h3>
         <FormInput

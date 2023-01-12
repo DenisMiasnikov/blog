@@ -6,14 +6,6 @@ export default class BlogProfileService {
   }
 
   async getProfile(username) {
-    // const res = fetch(`${this._apiBase}${username}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
     const res = await fetch(`${this._apiBase}${username}`);
     if (!res.ok) {
       throw new Error(`Could not fetch , recieved ${res.status}`);

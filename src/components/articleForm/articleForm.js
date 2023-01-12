@@ -1,13 +1,11 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
-import { connect } from 'react-redux';
 import { useForm, useFieldArray } from 'react-hook-form';
 
 import SubmitButton from '../submitButton';
 import FormInput from '../formInput';
 import TagButton from '../tagButton';
 import InputError from '../inputError';
-import * as actions from '../../actions/articleActions';
 
 import style from './articleForm.module.scss';
 
@@ -57,7 +55,6 @@ export default function ArticleForm(props) {
     } else if (!id) {
       action(articleData);
     }
-    // action(articleData);
     reset();
     remove();
   };

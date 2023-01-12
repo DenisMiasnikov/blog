@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import SubmitButton from '../submitButton';
 import FormFooter from '../formFooter';
 import FormInput from '../formInput';
+import InputError from '../inputError';
 import * as actions from '../../actions/loginActions';
 
 import style from './singUp.module.scss';
@@ -18,20 +19,24 @@ function SingUp({ data, asyncMakeUser }) {
     formState: { errors },
     handleSubmit,
     setError,
-    reset,
+    watch,
   } = useForm({
     mode: 'onBlur',
   });
   const { isLogged } = data;
+
   const onSubmit = (e) => {
     const userData = {
       email: e.email,
       password: e.password,
       username: e.username,
     };
-    // e.preventDefault();
+
     asyncMakeUser(userData, setError);
   };
+
+  const password = watch('password');
+
   return (
     <div className={style.wrapper}>
       {isLogged && <Navigate to="/article" />}
@@ -84,18 +89,31 @@ function SingUp({ data, asyncMakeUser }) {
             },
           })}
         />
-        <FormInput title="Repeat Password" placeholder="Password" type="password" />
+        <FormInput
+          title="Repeat Password"
+          placeholder="Password"
+          name="repeat password"
+          errors={errors['repeat password']}
+          reg={register('repeat password', {
+            required: 'You should repeat password',
+            validate: {
+              validate: (value) => value === password || 'Repeted password must match',
+            },
+          })}
+        />
         <div className={style.agreementForm}>
-          <input
-            className={style.agreementCheckbox}
-            id="agreement"
-            type="checkbox"
-            name="agreement"
-            value="agreement"
-          />
-          <label className={style.agreementLabel} htmlFor="agreement">
+          <label className={style.agreementLabel}>
             I agree to the processing of my personal information
+            <input
+              className={style.agreementCheckbox}
+              type="checkbox"
+              name="agreement"
+              {...register('agreement', {
+                required: 'You have to be agree',
+              })}
+            />
           </label>
+          {errors.agreement && <InputError message={errors.agreement.message} />}
         </div>
         <SubmitButton text="Create" />
         <FormFooter text="Already have an account?" link="/sing-in" linkText="Sing in" />

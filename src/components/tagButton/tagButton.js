@@ -24,9 +24,7 @@ export default function TagButton(props) {
     return (
       <Popconfirm
         placement="rightTop"
-        // title="Delete the task"
         title="Are you sure to delete this article?"
-        // description="Are you sure to delete this article?"
         okText="Yes"
         cancelText="No"
         onConfirm={action}

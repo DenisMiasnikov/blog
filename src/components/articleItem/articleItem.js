@@ -1,24 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import format from 'date-fns/format';
 import { nanoid } from 'nanoid';
 
 import TagButton from '../tagButton';
+import Error from '../error';
+import BlogArticlesService from '../../services/blog-articles-service';
+import * as action from '../../actions/articleActions';
 
 import style from './articleItem.module.scss';
 
-export default function ArticleItem(props) {
-  const { article, user, like, unlike, token, id } = props;
+function ArticleItem(props) {
+  const { article, user, like, unlike, token, id, data, asyncGetAnError } = props;
+  const { error } = data;
   const { slug, favorited, createdAt } = article;
   const { isLogged } = user;
   const created = createdAt ? format(new Date(createdAt), 'PP') : null;
 
   const location = useLocation();
+  const navigate = useNavigate();
   const position = location.pathname === '/article';
 
+  const blog = new BlogArticlesService();
+
   const onClick = () => {
-    console.log('click');
+    blog
+      .deleteArticle(token, slug)
+      .then(() => navigate('/article'))
+      .catch(() => {
+        asyncGetAnError();
+      });
   };
 
   const onLike = () => {
@@ -47,8 +60,8 @@ export default function ArticleItem(props) {
         <span className={style.tagName}>{tag}</span>
       </li>
     ));
-
-    return (
+    const errorContent = error ? <Error message="Sorry, you are not permitted to delete this article" /> : null;
+    const content = !error ? (
       <div className={style.article}>
         <div className={style.articleItem}>
           <div className={style.articleContent}>
@@ -86,6 +99,18 @@ export default function ArticleItem(props) {
           </div>
         </div>
       </div>
+    ) : null;
+    return (
+      <>
+        {errorContent}
+        {content}
+      </>
     );
   }
 }
+
+const mapStsateToProps = (state) => ({
+  data: state.articlesReducer,
+});
+
+export default connect(mapStsateToProps, action)(ArticleItem);

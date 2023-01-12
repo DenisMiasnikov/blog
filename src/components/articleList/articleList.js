@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Pagination } from 'antd';
 
@@ -15,10 +15,10 @@ function ArticleList({ article, user, asyncGetGlobalArticles, asyncUnFavoriteAnA
 
   useEffect(() => {
     if (isLogged) {
-      asyncGetGlobalArticles(token);
+      asyncGetGlobalArticles(1, token);
     }
     if (!isLogged) {
-      asyncGetGlobalArticles(token);
+      asyncGetGlobalArticles(1);
     }
   }, [asyncGetGlobalArticles, isLogged, token]);
 
@@ -28,7 +28,7 @@ function ArticleList({ article, user, asyncGetGlobalArticles, asyncUnFavoriteAnA
 
   const onChange = (e) => {
     if (token) {
-      asyncGetGlobalArticles(token, e);
+      asyncGetGlobalArticles(e, token);
     }
     if (!token) {
       asyncGetGlobalArticles(e);

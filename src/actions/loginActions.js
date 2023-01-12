@@ -1,3 +1,5 @@
+import { redirect } from 'react-router-dom';
+
 import BlogUserService from '../services/blog-services';
 
 import * as types from './actionsType';
@@ -59,6 +61,7 @@ export const asyncUpdateUser = (token, data, fn) => (dispatch) => {
     .then((userData) => {
       localStorage.setItem('token', userData.user.token);
       dispatch(userSingIn(userData.user));
+      return redirect('/article');
     })
     .catch(() => {
       dispatch(setError());
