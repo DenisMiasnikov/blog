@@ -26,7 +26,6 @@ export default class BlogArticlesService {
   }
 
   async getGlobalRecent(token, offset) {
-    console.log(token, offset);
     const res = await fetch(`${this._apiBase}?offset=${offset}`, {
       method: 'GET',
       headers: {
