@@ -62,7 +62,7 @@ export const asyncGetGlobalArticles = (e, token) => (dispatch) => {
   if (e && !token) {
     dispatch(changePage(e));
     article
-      .getGlobalRecent(getOffset(e))
+      .getGlobalRecent(undefined, getOffset(e))
       .then((res) => {
         dispatch(getGlobalArticles(res));
       })
