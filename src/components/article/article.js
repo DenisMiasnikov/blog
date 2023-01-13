@@ -8,6 +8,7 @@ import * as actions from '../../actions/articleActions';
 
 function Article({ article, user, asyncGetAnArticle, asyncUnFavoriteAnArticle, asyncFavoriteAnArticle, loading }) {
   const token = localStorage.getItem('token');
+  const { anArticle, actualPage } = article;
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,12 +20,13 @@ function Article({ article, user, asyncGetAnArticle, asyncUnFavoriteAnArticle, a
       {loading && <Loading />}
       {!loading && (
         <ArticleItem
-          article={article}
+          article={anArticle}
           user={user}
           like={asyncFavoriteAnArticle}
           unlike={asyncUnFavoriteAnArticle}
           id={id}
           token={token}
+          page={actualPage}
         />
       )}
     </>
@@ -32,7 +34,7 @@ function Article({ article, user, asyncGetAnArticle, asyncUnFavoriteAnArticle, a
 }
 
 const mapStateToProps = (state) => ({
-  article: state.articlesReducer.anArticle,
+  article: state.articlesReducer,
   loading: state.articlesReducer.loading,
   user: state.loginReducer,
 });

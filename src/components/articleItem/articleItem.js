@@ -13,7 +13,7 @@ import * as action from '../../actions/articleActions';
 import style from './articleItem.module.scss';
 
 function ArticleItem(props) {
-  const { article, user, like, unlike, token, id, data, asyncGetAnError } = props;
+  const { article, user, like, unlike, token, id, data, asyncGetAnError, page } = props;
   const { error } = data;
   const { slug, favorited, createdAt } = article;
   const { isLogged } = user;
@@ -39,9 +39,9 @@ function ArticleItem(props) {
       return;
     }
     if (favorited) {
-      unlike(token, slug);
+      unlike(token, slug, page);
     } else if (!favorited) {
-      like(token, slug);
+      like(token, slug, page);
     }
   };
 

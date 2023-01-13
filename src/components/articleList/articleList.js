@@ -43,6 +43,7 @@ function ArticleList({ article, user, asyncGetGlobalArticles, asyncUnFavoriteAnA
       like={asyncFavoriteAnArticle}
       unlike={asyncUnFavoriteAnArticle}
       token={token}
+      page={actualPage}
     />
   ));
   return (

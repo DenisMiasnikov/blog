@@ -95,19 +95,19 @@ export const asyncGetAnArticle = (id, token) => (dispatch) => {
     });
 };
 
-export const asyncFavoriteAnArticle = (token, id) => async (dispatch) => {
+export const asyncFavoriteAnArticle = (token, id, page) => async (dispatch) => {
   like.favoriteArticle(token, id).then((anArticle) => {
     dispatch(getAnArticles(anArticle.article));
-    article.getGlobalRecent(token).then((res) => {
+    article.getGlobalRecent(token, getOffset(page)).then((res) => {
       dispatch(getGlobalArticles(res));
     });
   });
 };
 
-export const asyncUnFavoriteAnArticle = (token, id) => async (dispatch) => {
+export const asyncUnFavoriteAnArticle = (token, id, page) => async (dispatch) => {
   like.unFavoriteArticle(token, id).then((anArticle) => {
     dispatch(getAnArticles(anArticle.article));
-    article.getGlobalRecent(token).then((res) => {
+    article.getGlobalRecent(token, getOffset(page)).then((res) => {
       dispatch(getGlobalArticles(res));
     });
   });
