@@ -9,6 +9,7 @@ import SubmitButton from '../submitButton';
 import FormFooter from '../formFooter';
 import FormInput from '../formInput';
 import Loading from '../loading';
+import routs from '../../routs/routs';
 import * as actions from '../../actions/loginActions';
 
 import style from './singIn.module.scss';
@@ -72,7 +73,7 @@ function SingIn({ data, asyncUserSingIn, startToFetch, loading }) {
               reg={register('password', { required: "Password field can't be empty" })}
             />
             <SubmitButton text="Login" />
-            <FormFooter text="Don’t have an account?" link="/sing-up" linkText="Sing Up" />
+            <FormFooter text="Don’t have an account?" link={routs.singUp} linkText="Sing Up" />
           </form>
         </div>
       )}

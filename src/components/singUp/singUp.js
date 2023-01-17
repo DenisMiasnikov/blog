@@ -9,6 +9,7 @@ import SubmitButton from '../submitButton';
 import FormFooter from '../formFooter';
 import FormInput from '../formInput';
 import InputError from '../inputError';
+import routs from '../../routs/routs';
 import * as actions from '../../actions/loginActions';
 
 import style from './singUp.module.scss';
@@ -39,7 +40,7 @@ function SingUp({ data, asyncMakeUser }) {
 
   return (
     <div className={style.wrapper}>
-      {isLogged && <Navigate to="/article" />}
+      {isLogged && <Navigate to={routs.articles} />}
       <form className={style.container} onSubmit={handleSubmit(onSubmit)}>
         <h3 className={style.title}>Create new account</h3>
         <FormInput
@@ -116,7 +117,7 @@ function SingUp({ data, asyncMakeUser }) {
           {errors.agreement && <InputError message={errors.agreement.message} />}
         </div>
         <SubmitButton text="Create" />
-        <FormFooter text="Already have an account?" link="/sing-in" linkText="Sing in" />
+        <FormFooter text="Already have an account?" link={routs.singIn} linkText="Sing in" />
       </form>
     </div>
   );

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import BlogArticlesService from '../../services/blog-articles-service';
 import ArticleForm from '../articleForm/articleForm';
 import Error from '../error';
+import routs from '../../routs/routs';
 import * as actions from '../../actions/articleActions';
 
 function EditArticleForm({ asyncGetAnError, asyncGetAnArticle, data }) {
@@ -19,7 +20,7 @@ function EditArticleForm({ asyncGetAnError, asyncGetAnArticle, data }) {
     const token = localStorage.getItem('token');
     article
       .updateArticle(token, id, newData)
-      .then((res) => navigate(`/article/${res.article.slug}`))
+      .then((res) => navigate(`${routs.articles}/${res.article.slug}`))
       .catch(() => {
         asyncGetAnError();
       });

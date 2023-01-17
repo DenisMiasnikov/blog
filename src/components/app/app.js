@@ -11,19 +11,20 @@ import EditForm from '../editForm';
 import EditArticleForm from '../editArticle';
 import CreateArticle from '../createArticle';
 import ReqAuth from '../hoc';
+import routs from '../../routs/routs';
 
 function App({ data }) {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/article" element={<ArticleList />} />
-        <Route path="/" element={<Navigate to="/article" replace />} />
-        <Route path="/article/:id" element={<Article />} />
-        <Route path="/sing-in" element={<SingIn />} />
-        <Route path="/sing-up" element={<SingUp />} />
+        <Route path={routs.articles} element={<ArticleList />} />
+        <Route path={routs.main} element={<Navigate to={routs.articles} replace />} />
+        <Route path={`${routs.articles}/:id`} element={<Article />} />
+        <Route path={routs.singIn} element={<SingIn />} />
+        <Route path={routs.singUp} element={<SingUp />} />
         <Route
-          path="/profile"
+          path={routs.editProfile}
           element={
             <ReqAuth>
               <EditForm />
@@ -31,7 +32,7 @@ function App({ data }) {
           }
         />
         <Route
-          path="/new-article"
+          path={routs.newArticle}
           element={
             <ReqAuth>
               <CreateArticle />
@@ -39,7 +40,7 @@ function App({ data }) {
           }
         />
         <Route
-          path="/articles/:id/edit"
+          path={`${routs.articles}/:id/edit`}
           element={
             <ReqAuth>
               <EditArticleForm />

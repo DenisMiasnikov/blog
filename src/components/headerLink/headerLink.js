@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import style from './logButton.module.scss';
+import style from './headerLink.module.scss';
 
-export default function LogButton(props) {
+export default function HeaderLink(props) {
   const { text, to, border, green, small } = props;
   const actClass = () => {
     if (small) {

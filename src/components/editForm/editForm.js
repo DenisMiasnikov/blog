@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import SubmitButton from '../submitButton';
 import BlogUserService from '../../services/blog-services';
 import FormInput from '../formInput';
+import routs from '../../routs/routs';
 import * as actions from '../../actions/loginActions';
 
 import style from './editForm.module.scss';
@@ -22,8 +23,9 @@ function EditForm({ data, asyncUpdateUser }) {
   } = useForm({
     mode: 'onBlur',
   });
-  const { isLogged, error } = data;
-  const user = new BlogUserService();
+  const { isLogged, user, error } = data;
+  const { username, email, image } = user;
+  const userService = new BlogUserService();
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
@@ -34,9 +36,9 @@ function EditForm({ data, asyncUpdateUser }) {
       username: e.username,
       image: e.image,
     };
-    user.updateUser(token, userData, setError).then(() => {
+    userService.updateUser(token, userData, setError).then(() => {
       asyncUpdateUser(token, userData, setError);
-      navigate('/article');
+      navigate(routs.articles);
     });
   };
   return (
@@ -47,6 +49,7 @@ function EditForm({ data, asyncUpdateUser }) {
           title="Username"
           placeholder="Username"
           name="username"
+          value={username}
           errors={errors.username}
           reg={register('username', {
             required: "Username field can't be empty",
@@ -56,6 +59,7 @@ function EditForm({ data, asyncUpdateUser }) {
           title="Email address"
           placeholder="Email address"
           name="email"
+          value={email}
           errors={errors.email}
           reg={register('email', {
             required: "Email field can't be empty",
@@ -71,7 +75,6 @@ function EditForm({ data, asyncUpdateUser }) {
           name="password"
           errors={errors.password}
           reg={register('password', {
-            required: "Password field can't be empty",
             minLength: {
               value: 6,
               message: 'Password must be at least 6 characters long',
@@ -86,6 +89,7 @@ function EditForm({ data, asyncUpdateUser }) {
           title="Avatar image (url)"
           placeholder="Avatar image"
           name="image"
+          value={image}
           errors={errors.avatar}
           reg={register('image', {
             pattern: {

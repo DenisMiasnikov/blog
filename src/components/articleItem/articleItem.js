@@ -8,6 +8,7 @@ import { nanoid } from 'nanoid';
 import TagButton from '../tagButton';
 import Error from '../error';
 import BlogArticlesService from '../../services/blog-articles-service';
+import routs from '../../routs/routs';
 import * as action from '../../actions/articleActions';
 
 import style from './articleItem.module.scss';
@@ -21,16 +22,18 @@ function ArticleItem(props) {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const position = location.pathname === '/article';
+  const position = location.pathname === routs.articles;
 
   const blog = new BlogArticlesService();
 
   const onClick = () => {
     blog
       .deleteArticle(token, slug)
-      .then(() => navigate('/article'))
-      .catch(() => {
-        asyncGetAnError();
+      .then(() => {
+        navigate(routs.articles);
+      })
+      .catch((e) => {
+        asyncGetAnError(e);
       });
   };
 
@@ -48,8 +51,9 @@ function ArticleItem(props) {
   if (article.length !== 0) {
     const { title, description, tagList, favoritesCount, author, body } = article;
     const { username, image } = author;
+    const mySrc = image || 'https://static.productionready.io/images/smiley-cyrus.jpg';
     const articleTitle = position ? (
-      <Link to={`/article/${article.slug}`}>
+      <Link to={`${routs.articles}/${article.slug}`}>
         <h6 className={style.articleTitle}>{title}</h6>
       </Link>
     ) : (
@@ -86,12 +90,20 @@ function ArticleItem(props) {
                 <span className={style.articleUserName}>{username}</span>
                 <span className={style.articleDate}>{created} </span>
               </div>
-              <img src={image} alt="userPhoto" className={style.userPhoto} />
+              <img
+                src={mySrc}
+                alt="userPhoto"
+                className={style.userPhoto}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = 'https://static.productionready.io/images/smiley-cyrus.jpg';
+                }}
+              />
             </div>
             {isLogged && id && (
               <div className={style.articleButtons}>
                 <TagButton name="del-s" text="Delete" action={onClick} />
-                <Link to={`/articles/${id}/edit`}>
+                <Link to={`${routs.articles}/${id}/edit`}>
                   <TagButton name="edit" text="Edit" />
                 </Link>
               </div>

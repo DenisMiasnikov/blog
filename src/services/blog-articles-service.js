@@ -1,109 +1,48 @@
-/* eslint-disable default-param-last */
 /* eslint-disable no-return-await */
 /* eslint-disable no-underscore-dangle */
 import Error from '../components/error';
 
 export default class BlogArticlesService {
   constructor() {
-    this._apiBase = 'https://blog.kata.academy/api/articles';
+    this._apiBase = 'https://blog.kata.academy/api/';
+    this._baseRequest = async (method, url, token, data) => {
+      const res = await fetch(url, {
+        method: `${method}`,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Could not fetch, recieved ${res.status}`);
+      }
+      if (method === 'DELETE') {
+        return await res;
+      }
+      return await res.json();
+    };
   }
 
-  async getFollowRecent(token) {
-    const res = await fetch(`${this._apiBase}/feed`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Could not fetch, recieved ${res.status}`);
-    }
-
-    return await res.json();
+  getGlobalRecent(token, offset) {
+    return this._baseRequest('GET', `${this._apiBase}articles?offset=${offset}`, token);
   }
 
-  async getGlobalRecent(token, offset) {
-    const res = await fetch(`${this._apiBase}?offset=${offset}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Could not fetch, recieved ${res.status}`);
-    }
-
-    return await res.json();
+  getAnArticle(slug, token) {
+    return this._baseRequest('GET', `${this._apiBase}articles/${slug}`, token);
   }
 
-  async getAnArticle(slug, token) {
-    const res = await fetch(`${this._apiBase}/${slug}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`Could not fetch, recieved ${res.status}`);
-    }
-    return await res.json();
+  createArticle(token, data) {
+    return this._baseRequest('POST', `${this._apiBase}articles`, token, data);
   }
 
-  async createArticle(token, data) {
-    const res = await fetch(`${this._apiBase}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) {
-      throw new Error(`Could not fetch, recieved ${res.status}`);
-    }
-
-    return await res.json();
+  updateArticle(token, id, data) {
+    return this._baseRequest('PUT', `${this._apiBase}articles/${id}`, token, data);
   }
 
-  async updateArticle(token, id, data) {
-    const res = await fetch(`${this._apiBase}/${id}`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) {
-      throw new Error(`Could not fetch, recieved ${res.status}`);
-    }
-
-    return await res.json();
-  }
-
-  async deleteArticle(token, slug) {
-    const res = await fetch(`${this._apiBase}/${slug}`, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!res.ok) {
-      throw new Error(`Could not fetch, recieved ${res.status}`);
-    }
-    return await res;
+  deleteArticle(token, slug) {
+    return this._baseRequest('DELETE', `${this._apiBase}articles/${slug}`, token);
   }
 }

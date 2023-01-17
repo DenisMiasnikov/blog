@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import BlogArticlesService from '../../services/blog-articles-service';
 import ArticleForm from '../articleForm/articleForm';
+import routs from '../../routs/routs';
 
 function CreateArticle() {
   const article = new BlogArticlesService();
@@ -13,7 +14,7 @@ function CreateArticle() {
     const token = localStorage.getItem('token');
     const res = await article.createArticle(token, data);
     if (res) {
-      return navigate(`/article/${res.article.slug}`);
+      return navigate(`${routs.articles}/${res.article.slug}`);
     }
   };
   return <ArticleForm formTitle="Create article" action={loader} />;

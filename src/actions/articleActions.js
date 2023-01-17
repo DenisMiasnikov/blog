@@ -113,12 +113,6 @@ export const asyncUnFavoriteAnArticle = (token, id, page) => async (dispatch) =>
   });
 };
 
-export const asyncDeleteAnArticle = (token, id) => async (dispatch) => {
-  article.deleteArticle(token, id).catch((e) => {
-    dispatch(getAnError(e));
-  });
-};
-
-export const asyncGetAnError = () => async (dispatch) => {
-  dispatch(getAnError());
+export const asyncGetAnError = (e) => async (dispatch) => {
+  dispatch(getAnError(e));
 };
