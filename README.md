@@ -1,1 +1,1 @@
-https://blog-eta-three-68.vercel.app/article
+https://blog-swart-alpha-32.vercel.app/articles
